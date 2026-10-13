@@ -158,7 +158,7 @@ var CONFIG = {
   name: "EggMacro",
   priceFree: "0 ₽",
   pricePro: "199 ₽",
-  downloadLink: "#",   // ссылка на скачивание
+  downloadLink: "macro.zip",   // файл макроса рядом с index.html (или любая ссылка)
   buyLink: "#",        // ссылка на оплату
   videoLink: "#",      // ссылка на видео
   contactLink: "#"     // Telegram / Discord
@@ -166,7 +166,7 @@ var CONFIG = {
 document.querySelectorAll("[data-c]").forEach(function(el){
   var v = CONFIG[el.getAttribute("data-c")];
   if(v === undefined) return;
-  if(el.tagName === "A"){ if(v !== "#") el.href = v; } else { el.textContent = v; }
+  if(el.tagName === "A"){ if(v !== "#") el.href = v; if(el.getAttribute("data-c") === "downloadLink" && v.indexOf("http") !== 0) el.setAttribute("download", ""); } else { el.textContent = v; }
 });
 document.title = CONFIG.name + " — макрос для Steal an Egg";
 var n = 0, egg = document.getElementById("egg"), out = document.getElementById("n");
