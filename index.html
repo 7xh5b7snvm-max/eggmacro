@@ -3,154 +3,260 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1769d9">
 <title>EggMacro — макрос для Steal an Egg</title>
 <style>
 :root{
-  --bg:#12203a; --bg2:#1a2c4d; --ink:#f4f7fb; --muted:#a9b8d0;
-  --yolk:#ffb703; --yolk-d:#e09b00; --shell:#fff6e0; --line:#2b4068; --ok:#5fd38d;
+  --blue:#1769d9; --blue-d:#0f4fa8; --blue-l:#e8f1fd; --yolk:#ffb703; --yolk-d:#e5a000;
+  --bg:#ffffff; --bg2:#f3f7fd; --ink:#10213d; --muted:#53647f; --line:#d9e3f2; --card:#ffffff; --ok:#1fae6b;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme: light){
-  :root:not([data-theme="dark"]){ --bg:#fff9e8; --bg2:#fff1c7; --ink:#1b2a47; --muted:#55627c; --line:#e8d9a6; --shell:#fffdf4; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0c1729; --bg2:#10203a; --ink:#eef3fb; --muted:#9db0cc; --line:#223657; --card:#12233f; --blue-l:#16315c; }
 }
-:root[data-theme="light"]{ --bg:#fff9e8; --bg2:#fff1c7; --ink:#1b2a47; --muted:#55627c; --line:#e8d9a6; --shell:#fffdf4; }
+:root[data-theme="dark"]{ --bg:#0c1729; --bg2:#10203a; --ink:#eef3fb; --muted:#9db0cc; --line:#223657; --card:#12233f; --blue-l:#16315c; }
 *,*::before,*::after{box-sizing:inherit}
-html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;line-height:1.6}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Trebuchet MS",system-ui,sans-serif;line-height:1.6}
 a{color:inherit}
-.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
-header{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
-.logo{font-weight:800;font-size:20px;text-decoration:none;letter-spacing:.2px}
-nav a{margin-left:18px;text-decoration:none;color:var(--muted);font-size:15px}
-nav a:hover{color:var(--ink)}
-h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.15;margin:0}
-.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:36px 0 64px}
-h1{font-size:clamp(34px,6vw,58px);font-weight:700}
-.lead{color:var(--muted);font-size:18px;max-width:46ch;margin:18px 0 26px}
-.btns{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-block;padding:13px 22px;border-radius:12px;font-weight:700;text-decoration:none;border:2px solid var(--yolk);cursor:pointer;font:inherit;font-weight:700}
-.btn.main{background:var(--yolk);color:#2a1d00}
-.btn.main:hover{background:var(--yolk-d);border-color:var(--yolk-d)}
-.btn.ghost{background:transparent;color:var(--ink)}
-.btn.ghost:hover{background:var(--bg2)}
-.btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--ok);outline-offset:3px}
-.demo{text-align:center}
-.egg{width:190px;height:240px;margin:0 auto;border:0;cursor:pointer;
-  background:radial-gradient(circle at 35% 30%,#fff 0,var(--shell) 45%,#f0d9a6 100%);
-  border-radius:50% 50% 50% 50% / 62% 62% 38% 38%;box-shadow:0 18px 0 -6px rgba(0,0,0,.18);
-  transition:transform .12s}
-.egg:active{transform:scale(.94) rotate(-3deg)}
-.egg.pop{animation:wob .35s}
-@keyframes wob{0%{transform:rotate(0)}30%{transform:rotate(-6deg)}60%{transform:rotate(5deg)}100%{transform:rotate(0)}}
-.count{font-family:Georgia,serif;font-size:34px;margin-top:20px}
-.hint{color:var(--muted);font-size:14px}
-section{padding:54px 0;border-top:1px solid var(--line)}
-h2{font-size:clamp(26px,4vw,38px);margin-bottom:26px}
-.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px}
-.feats h3{font-size:20px;margin-bottom:6px}
-.feats p,.steps p{margin:0;color:var(--muted)}
-.steps{display:grid;gap:18px;counter-reset:s;padding:0;list-style:none;max-width:640px}
-.steps li{counter-increment:s;padding-left:54px;position:relative}
-.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:50%;
-  background:var(--yolk);color:#2a1d00;font-weight:800;display:grid;place-items:center}
-.steps b{display:block}
-.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-.plan{border:2px solid var(--line);border-radius:18px;padding:24px;background:var(--bg2)}
-.plan.hot{border-color:var(--yolk)}
-.plan .sum{font-family:Georgia,serif;font-size:38px;margin:6px 0 12px}
-.plan ul{padding-left:18px;margin:0 0 18px;color:var(--muted)}
-details{border-bottom:1px solid var(--line);padding:14px 0;max-width:720px}
-summary{cursor:pointer;font-weight:700}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+/* header */
+.top{position:sticky;top:0;z-index:10;background:var(--blue);color:#fff}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:20px;text-decoration:none;color:#fff}
+.logo i{width:22px;height:28px;background:#fff6dc;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;display:inline-block}
+.top nav{display:flex;align-items:center;gap:6px}
+.top nav a{color:#fff;text-decoration:none;padding:8px 12px;border-radius:8px;font-size:15px;opacity:.92}
+.top nav a:hover{background:rgba(255,255,255,.14)}
+.top nav a.dl{background:var(--yolk);color:#2a1d00;font-weight:700;opacity:1}
+.top nav a.dl:hover{background:var(--yolk-d)}
+/* buttons */
+.btn{display:inline-block;padding:14px 26px;border-radius:12px;font-weight:700;text-decoration:none;border:2px solid transparent;font-size:16px}
+.btn.y{background:var(--yolk);color:#2a1d00}
+.btn.y:hover{background:var(--yolk-d)}
+.btn.w{border-color:rgba(255,255,255,.7);color:#fff}
+.btn.w:hover{background:rgba(255,255,255,.14)}
+.btn.o{border-color:var(--blue);color:var(--blue)}
+.btn.o:hover{background:var(--blue-l)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.o{color:#8cb8f5;border-color:#8cb8f5}}
+a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:3px solid var(--yolk);outline-offset:3px}
+/* hero */
+.hero{background:linear-gradient(160deg,var(--blue) 0%,var(--blue-d) 100%);color:#fff;padding:70px 0 90px;text-align:center}
+.hero h1{font-size:clamp(34px,6.5vw,62px);line-height:1.1;margin:0 auto 18px;max-width:16ch;font-weight:800}
+.hero p{font-size:19px;max-width:52ch;margin:0 auto 30px;opacity:.92}
+.hero .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+/* fake app windows */
+.win{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px rgba(8,30,70,.22);overflow:hidden;text-align:left;width:100%;max-width:440px}
+.win .bar{display:flex;gap:6px;padding:11px 14px;background:var(--bg2);border-bottom:1px solid var(--line);align-items:center;font-size:13px;color:var(--muted)}
+.win .bar b{width:10px;height:10px;border-radius:50%;background:#f06a5e}.win .bar b:nth-child(2){background:#f5bf4f}.win .bar b:nth-child(3){background:#61c554}
+.win .bar span{margin-left:8px}
+.win .row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--line);font-size:15px}
+.win .row:last-child{border:0}
+.win .row small{display:block;color:var(--muted);font-size:12px}
+.sw{width:40px;height:22px;border-radius:12px;background:var(--line);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
+.sw.on{background:var(--ok)}.sw.on::after{left:21px}
+.val{font-weight:700;color:var(--blue)}
+.hero .win{margin:54px auto 0}
+/* sections */
+section{padding:76px 0}
+section.alt{background:var(--bg2)}
+.eyebrow{color:var(--blue);font-weight:700;font-size:15px;margin-bottom:6px}
+h2{font-size:clamp(28px,4.4vw,42px);line-height:1.15;margin:0 0 14px}
+.sub{color:var(--muted);font-size:18px;max-width:56ch;margin:0 0 34px}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.feat.rev .txt{order:2}
+.feat h3{font-size:30px;line-height:1.2;margin:0 0 12px}
+.feat p{color:var(--muted);margin:0 0 14px;font-size:17px}
+.feat ul{margin:0;padding:0;list-style:none}
+.feat li{padding-left:28px;position:relative;margin:8px 0}
+.feat li::before{content:"";position:absolute;left:2px;top:7px;width:12px;height:7px;border-left:3px solid var(--ok);border-bottom:3px solid var(--ok);transform:rotate(-45deg)}
+.feat .win{justify-self:center}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.card h3{margin:0 0 6px;font-size:20px}
+.card p{margin:0;color:var(--muted)}
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:700px}
+.plan{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:26px}
+.plan.hot{border-color:var(--blue)}
+.plan h3{margin:0}
+.sum{font-size:38px;font-weight:800;margin:6px 0 12px}
+.plan ul{margin:0 0 20px;padding-left:18px;color:var(--muted)}
+/* faq */
+details{border-bottom:1px solid var(--line);padding:16px 0;max-width:760px}
+summary{cursor:pointer;font-weight:700;font-size:17px}
 details p{color:var(--muted);margin:10px 0 0}
-.cta{text-align:center}
-.cta p{color:var(--muted);max-width:50ch;margin:0 auto 22px}
-footer{padding:30px 0 50px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
-@media (max-width:720px){.hero{grid-template-columns:1fr;text-align:left}nav{display:none}.egg{width:150px;height:190px}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+/* cta */
+.cta{background:linear-gradient(160deg,var(--blue) 0%,var(--blue-d) 100%);color:#fff;text-align:center}
+.cta h2{margin-bottom:10px}
+.cta p{opacity:.92;max-width:48ch;margin:0 auto 28px;font-size:18px}
+.cta .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+/* footer */
+footer{background:var(--bg2);padding:44px 0 50px;color:var(--muted);font-size:14px}
+footer .cols{display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between;margin-bottom:26px}
+footer b{display:block;color:var(--ink);margin-bottom:8px}
+footer a{display:block;text-decoration:none;margin:5px 0}
+footer a:hover{color:var(--ink)}
+@media (max-width:760px){
+  .top nav a:not(.dl){display:none}
+  .feat{grid-template-columns:1fr;gap:26px}.feat.rev .txt{order:0}
+  section{padding:56px 0}.hero{padding:48px 0 60px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <a class="logo" href="#top">🥚 <span data-c="name">EggMacro</span></a>
-    <nav><a href="#features">Возможности</a><a href="#how">Как начать</a><a href="#price">Цена</a><a href="#faq">Вопросы</a></nav>
-  </header>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top"><i></i><span data-c="name">EggMacro</span></a>
+    <nav>
+      <a href="#top">Главная</a>
+      <a href="#features">Возможности</a>
+      <a href="#price">Цена</a>
+      <a href="#faq">Вопросы</a>
+      <a data-c="contactLink" href="#cta">Discord</a>
+      <a class="dl" data-c="downloadLink" href="#price">Скачать</a>
+    </nav>
+  </div>
+</header>
 
-  <div class="hero" id="top">
-    <div>
-      <h1>Макрос для Steal an Egg: анти-АФК и автофарм, пока вы заняты своими делами</h1>
-      <p class="lead">Не вылетайте из игры за бездействие и фармите важное автоматически. Настройте один раз — макрос сам повторяет базовые действия.</p>
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <h1>Макрос для Steal an Egg, который работает за вас</h1>
+      <p>Анти-АФК не даёт игре выкинуть вас за бездействие, а автофарм собирает важные ресурсы, пока вы заняты своими делами.</p>
       <div class="btns">
-        <a class="btn main" data-c="downloadLink" href="#price">Скачать макрос</a>
-        <a class="btn ghost" data-c="videoLink" href="#how">Смотреть, как работает</a>
+        <a class="btn y" data-c="downloadLink" href="#price">Скачать макрос</a>
+        <a class="btn w" data-c="contactLink" href="#cta">Написать нам</a>
       </div>
-    </div>
-    <div class="demo">
-      <button class="egg" id="egg" aria-label="Нажми на яйцо"></button>
-      <div class="count"><span id="n">0</span> яиц</div>
-      <div class="hint">Нажмите на яйцо. Скучные повторы можно доверить макросу.</div>
+      <div class="win" style="margin-left:auto;margin-right:auto">
+        <div class="bar"><b></b><b></b><b></b><span>EggMacro</span></div>
+        <div class="row"><div>Анти-АФК<small>Двигает персонажа раз в минуту</small></div><div class="sw on"></div></div>
+        <div class="row"><div>Автофарм<small>Повторяет выбранные действия</small></div><div class="sw on"></div></div>
+        <div class="row"><div>Горячая клавиша</div><div class="val">F6</div></div>
+      </div>
     </div>
   </div>
 
   <section id="features">
-    <h2>Что умеет макрос</h2>
-    <div class="feats">
-      <div><h3>Анти-АФК</h3><p>Периодически двигает персонажа и нажимает клавиши, чтобы игра не выкидывала вас за бездействие.</p></div>
-      <div><h3>Свои горячие клавиши</h3><p>Включайте и останавливайте макрос одной клавишей, которую выбрали сами.</p></div>
-      <div><h3>Автофарм важного</h3><p>Повторяет нужные действия для фарма ресурсов, пока вы отдыхаете. Задержки настраиваются под ваш компьютер и пинг.</p></div>
-      <div><h3>Быстрые обновления</h3><p>Игра обновилась — макрос подстраивается. Новости выходят в нашем канале.</p></div>
+    <div class="wrap">
+      <div class="eyebrow">Главное</div>
+      <h2>Всё, что нужно для спокойной игры</h2>
+      <p class="sub">Два базовых инструмента, которые экономят время. Настройте один раз и запускайте одной клавишей.</p>
+
+      <div class="feat">
+        <div class="txt">
+          <h3>Анти-АФК: оставайтесь в игре</h3>
+          <p>Макрос периодически двигает персонажа и нажимает клавиши, чтобы игра считала вас активным.</p>
+          <ul>
+            <li>Свой интервал между действиями</li>
+            <li>Включение и остановка одной клавишей</li>
+            <li>Работает, пока вы заняты другими делами</li>
+          </ul>
+        </div>
+        <div class="win">
+          <div class="bar"><b></b><b></b><b></b><span>Анти-АФК</span></div>
+          <div class="row"><div>Включено</div><div class="sw on"></div></div>
+          <div class="row"><div>Интервал</div><div class="val">60 сек</div></div>
+          <div class="row"><div>Действие</div><div class="val">Шаг вперёд-назад</div></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="how">
-    <h2>Как начать за три минуты</h2>
-    <ol class="steps">
-      <li><b>Скачайте архив</b><p>Распакуйте его в любую папку.</p></li>
-      <li><b>Запустите макрос</b><p>Выберите горячую клавишу и задержки в окне настроек.</p></li>
-      <li><b>Откройте игру и нажмите клавишу</b><p>Макрос начнёт работать. Чтобы остановить, нажмите ту же клавишу.</p></li>
-    </ol>
+  <section class="alt">
+    <div class="wrap">
+      <div class="feat rev">
+        <div class="txt">
+          <h3>Автофарм важного</h3>
+          <p>Повторяет нужные действия для фарма ресурсов. Вы выбираете, что именно фармить, и задаёте задержки под свой компьютер.</p>
+          <ul>
+            <li>Настраиваемые задержки под ваш пинг</li>
+            <li>Профили для разных задач</li>
+            <li>Запуск и остановка по горячей клавише</li>
+          </ul>
+        </div>
+        <div class="win">
+          <div class="bar"><b></b><b></b><b></b><span>Автофарм</span></div>
+          <div class="row"><div>Включено</div><div class="sw on"></div></div>
+          <div class="row"><div>Профиль</div><div class="val">Основной</div></div>
+          <div class="row"><div>Задержка</div><div class="val">0,4 сек</div></div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="price">
-    <h2>Выберите вариант</h2>
-    <div class="price">
-      <div class="plan">
-        <h3>Базовый</h3>
-        <div class="sum" data-c="priceFree">0 ₽</div>
-        <ul><li>Анти-АФК</li><li>Одна горячая клавиша</li><li>Помощь в чате</li></ul>
-        <a class="btn ghost" data-c="downloadLink" href="#cta">Скачать</a>
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Настройки</div>
+      <h2>Подстройте под себя</h2>
+      <p class="sub">Простое окно настроек без лишнего.</p>
+      <div class="cards">
+        <div class="card"><h3>Горячие клавиши</h3><p>Выберите свою клавишу для запуска и остановки.</p></div>
+        <div class="card"><h3>Задержки</h3><p>Меняйте скорость под мощность ПК и пинг.</p></div>
+        <div class="card"><h3>Профили</h3><p>Сохраняйте разные наборы настроек и переключайтесь между ними.</p></div>
       </div>
-      <div class="plan hot">
-        <h3>Расширенный</h3>
-        <div class="sum" data-c="pricePro">199 ₽</div>
-        <ul><li>Всё из базового</li><li>Автофарм, задержки и профили</li><li>Ранний доступ к обновлениям</li></ul>
-        <a class="btn main" data-c="buyLink" href="#cta">Получить</a>
+    </div>
+  </section>
+
+  <section class="alt" id="price">
+    <div class="wrap">
+      <div class="eyebrow">Цена</div>
+      <h2>Выберите вариант</h2>
+      <p class="sub">Начните с базового и перейдите на расширенный, когда понадобится больше.</p>
+      <div class="plans">
+        <div class="plan">
+          <h3>Базовый</h3>
+          <div class="sum" data-c="priceFree">0 ₽</div>
+          <ul><li>Анти-АФК</li><li>Одна горячая клавиша</li><li>Помощь в чате</li></ul>
+          <a class="btn o" data-c="downloadLink" href="#cta">Скачать</a>
+        </div>
+        <div class="plan hot">
+          <h3>Расширенный</h3>
+          <div class="sum" data-c="pricePro">199 ₽</div>
+          <ul><li>Всё из базового</li><li>Автофарм, задержки и профили</li><li>Ранний доступ к обновлениям</li></ul>
+          <a class="btn y" data-c="buyLink" href="#cta">Получить</a>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="faq">
-    <h2>Частые вопросы</h2>
-    <details><summary>Нужны ли особые знания?</summary><p>Нет. Достаточно распаковать архив и выбрать клавишу запуска.</p></details>
-    <details><summary>Что делать, если макрос не работает после обновления игры?</summary><p>Напишите нам в канал или в чат. Мы проверим и выпустим исправление.</p></details>
-    <details><summary>Есть ли риск для аккаунта?</summary><p>Правила игры и платформы могут запрещать автоматизацию. Вы используете макрос на свой риск и сами отвечаете за свой аккаунт.</p></details>
-    <details><summary>Это вирус?</summary><p>Нет. Скачивайте макрос только с этой страницы и проверяйте файл антивирусом, как любую программу из интернета.</p></details>
-  </section>
-
-  <section class="cta" id="cta">
-    <h2>Готовы попробовать?</h2>
-    <p>Скачайте макрос или напишите автору, если нужна помощь с настройкой.</p>
-    <div class="btns" style="justify-content:center">
-      <a class="btn main" data-c="downloadLink" href="#price">Скачать макрос</a>
-      <a class="btn ghost" data-c="contactLink" href="#cta">Написать автору</a>
+    <div class="wrap">
+      <h2>Частые вопросы</h2>
+      <p class="sub">Коротко о том, что обычно спрашивают перед скачиванием.</p>
+      <details><summary>Нужны ли особые знания?</summary><p>Нет. Распакуйте архив, выберите клавишу запуска и задержки в окне настроек.</p></details>
+      <details><summary>Есть ли риск для аккаунта?</summary><p>Правила игры и платформы могут запрещать автоматизацию. Вы используете макрос на свой риск и сами отвечаете за свой аккаунт.</p></details>
+      <details><summary>Антивирус ругается на файл. Это вирус?</summary><p>Программы, которые управляют мышью и клавиатурой, антивирусы часто отмечают как подозрительные. Скачивайте макрос только с этой страницы и при желании проверьте файл сами.</p></details>
+      <details><summary>Что делать, если макрос перестал работать после обновления игры?</summary><p>Напишите нам в чат. Мы проверим и выпустим исправление.</p></details>
+      <details><summary>Где получить помощь?</summary><p>Напишите нам через кнопку «Написать нам», и мы подскажем с настройкой.</p></details>
     </div>
   </section>
 
-  <footer>
-    <span data-c="name">EggMacro</span> — неофициальный инструмент, не связан с разработчиками Steal an Egg. Все названия принадлежат их владельцам.
-  </footer>
-</div>
+  <section class="cta" id="cta">
+    <div class="wrap">
+      <h2>Готовы попробовать?</h2>
+      <p>Скачайте макрос и настройте его за пару минут.</p>
+      <div class="btns">
+        <a class="btn y" data-c="downloadLink" href="#price">Скачать макрос</a>
+        <a class="btn w" data-c="contactLink" href="#cta">Написать нам</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><b data-c="name">EggMacro</b>Макрос для Steal an Egg</div>
+      <div><b>Разделы</b><a href="#features">Возможности</a><a href="#price">Цена</a><a href="#faq">Вопросы</a></div>
+      <div><b>Связь</b><a data-c="contactLink" href="#cta">Написать нам</a><a data-c="downloadLink" href="#price">Скачать</a></div>
+    </div>
+    <div><span data-c="name">EggMacro</span> — неофициальный инструмент, не связан с разработчиками Steal an Egg. Все названия принадлежат их владельцам.</div>
+  </div>
+</footer>
 
 <script>
 // Здесь меняйте название, цены и ссылки на свои
@@ -158,22 +264,19 @@ var CONFIG = {
   name: "EggMacro",
   priceFree: "0 ₽",
   pricePro: "199 ₽",
-  downloadLink: "macro.zip",   // файл макроса рядом с index.html (или любая ссылка)
-  buyLink: "#",        // ссылка на оплату
-  videoLink: "#",      // ссылка на видео
-  contactLink: "#"     // Telegram / Discord
+  downloadLink: "macro.zip",  // файл макроса рядом с index.html (или любая ссылка)
+  buyLink: "#",               // ссылка на оплату
+  contactLink: "#"            // Telegram / Discord
 };
 document.querySelectorAll("[data-c]").forEach(function(el){
   var v = CONFIG[el.getAttribute("data-c")];
   if(v === undefined) return;
-  if(el.tagName === "A"){ if(v !== "#") el.href = v; if(el.getAttribute("data-c") === "downloadLink" && v.indexOf("http") !== 0) el.setAttribute("download", ""); } else { el.textContent = v; }
+  if(el.tagName === "A"){
+    if(v !== "#") el.href = v;
+    if(el.getAttribute("data-c") === "downloadLink" && v.indexOf("http") !== 0) el.setAttribute("download", "");
+  } else { el.textContent = v; }
 });
 document.title = CONFIG.name + " — макрос для Steal an Egg";
-var n = 0, egg = document.getElementById("egg"), out = document.getElementById("n");
-egg.addEventListener("click", function(){
-  n++; out.textContent = n;
-  egg.classList.remove("pop"); void egg.offsetWidth; egg.classList.add("pop");
-});
 </script>
 </body>
 </html>
